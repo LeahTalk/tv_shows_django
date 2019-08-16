@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Read (one)</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/tv_shows_app/css/style.css' %}">
+</head>
+<body>
+    <div class = "wrapper">
+        <form style = "margin-left: 890px" action = '/shows'>
+            <button type = "submit" class = "view_button">Go Back</button>
+        </form>
+        <h1 style = "margin-bottom: 50px">TV Show {{ id }}</h1>
+        <p>Title: {{ title }}</p>
+        <p>Network: {{ network }}</p> 
+        <p>Release Date: {{ release_date }}</p>
+        <p style = "margin-bottom: 150px">Description: {{ desc }}</p>
+        <p>Last Updated: {{ last_updated }}</p>
+        <form style = "display: inline-block" action = '/shows/1/edit'>
+            <button type = "submit" class = "view_button">Edit</button>
+        </form>
+        <p style = "display: inline-block">|</p>
+        <form style = "display: inline-block" action = '/shows/{{ id }}/delete'>
+            <button type = "submit" class = "view_button">Delete</button>
+        </form>
+    </div>
+</body>

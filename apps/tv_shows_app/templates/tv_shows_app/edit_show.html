@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>Update</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/tv_shows_app/css/style.css' %}">
+</head>
+<body>
+    <div class = "wrapper">
+        <form style = "margin-left: 890px" action = '/shows'>
+            <button type = "submit" class = "view_button">Go Back</button>
+        </form>
+        <h1 style = "margin-bottom: 50px">Edit Show {{ id }}</h1>
+        <form action = '/shows/{{ id }}/update_show' method = 'post'>
+            {% csrf_token %}
+            <label for="title">Title</label>
+            <input class="form-control" type="text" value = '{{title}}' id = "title" name = "title" style = "width: 400px">
+            <label for="network">Network</label>
+            <input class="form-control inline_input" type="text" value='{{ network }}'' id = "network" name = "network">
+            <label for="release_date">Release Date</label>
+            <input class="form-control inline_input" type="date" id = "date" name = "date" value = {{ release_date }}>
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name = "description" rows="5">{{ desc }}</textarea>
+            <div style ='text-align: center'>
+                <button class="btn btn-primary" type="submit" style = "margin: 20px auto; display: block">Update</button>
+                <form action = '/shows/'>
+                    <button type = "submit" class = "view_button">Go to Show</button>
+                </form>
+                </html>
+            </div>
+        </form>
+    </div>
+</body>

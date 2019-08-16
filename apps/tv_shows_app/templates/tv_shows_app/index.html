@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Read (all)</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/tv_shows_app/css/style.css' %}">
+</head>
+<body>
+    <div class = "wrapper">
+        <h1 style = "margin-bottom:50px">All Shows</h1>
+        <div class = "list_section">
+            <table class="table table-bordered table-dark">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Network</th>
+                    <th scope="col">Release Date</th>
+                    <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for show in shows %}
+                    <tr>
+                        <td style = "text-decoration: underline">{{ show.id }}</td>
+                        <td>{{ show.title }}</td>
+                        <td>{{ show.network }}</td>
+                        <td>{{ show.release_date }}</td>
+                        <td style = "width: 200px">
+                            <form style = "display: inline-block" action = '/shows/{{ show.id }}'>
+                                <button type = "submit" class = "view_button">Show</button>
+                            </form>
+                            <p style = "display: inline-block"> | </p>
+                            <form style = "display: inline-block" action = '/shows/{{ show.id }}/edit'>
+                                <button type = "submit" class = "view_button">Edit</button>
+                            </form>
+                            <p style = "display: inline-block"> | </p>
+                            <form style = "display: inline-block" action = '/shows/{{ show.id }}/delete'>
+                                <button type = "submit" class = "view_button">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                </tbody>
+            </table>
+        </div>
+        <form style = "margin-top: 20px" action = '/shows/new'>
+            <button type = "submit" class = "view_button">Add a New Show</button>
+        </form>
+    </div>
+</body>
