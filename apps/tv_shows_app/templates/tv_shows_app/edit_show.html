@@ -13,6 +13,13 @@
             <button type = "submit" class = "view_button">Go Back</button>
         </form>
         <h1 style = "margin-bottom: 50px">Edit Show {{ id }}</h1>
+        {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+        {% endif %} 
         <form action = '/shows/{{ id }}/update_show' method = 'post'>
             {% csrf_token %}
             <label for="title">Title</label>
@@ -22,7 +29,7 @@
             <label for="release_date">Release Date</label>
             <input class="form-control inline_input" type="date" id = "date" name = "date" value = {{ release_date }}>
             <label for="description">Description</label>
-            <textarea class="form-control" id="description" name = "description" rows="5">{{ desc }}</textarea>
+            <textarea class="form-control" id="description" name = "desc" rows="5">{{ desc }}</textarea>
             <div style ='text-align: center'>
                 <button class="btn btn-primary" type="submit" style = "margin: 20px auto; display: block">Update</button>
                 <form action = '/shows/'>

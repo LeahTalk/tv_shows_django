@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
+from django.contrib import messages
 
 def all_shows(request):
     context = {
@@ -22,12 +23,18 @@ def edit_show(request, show_id):
     return render(request, 'tv_shows_app/edit_show.html', context)
 
 def update_show(request, show_id):
-    show = Shows.objects.get(id = show_id)
-    show.title = request.POST['title']
-    show.network = request.POST['network']
-    show.release_date = request.POST['date']
-    show.desc = request.POST['description']
-    show.save()
+    errors = Shows.objects.show_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'/shows/{show_id}/edit')
+    else:
+        show = Shows.objects.get(id = show_id)
+        show.title = request.POST['title']
+        show.network = request.POST['network']
+        show.release_date = request.POST['date']
+        show.desc = request.POST['desc']
+        show.save()
     return redirect('/shows/' + str(show_id))
 
 def show_details(request, show_id):
@@ -48,6 +55,14 @@ def delete_show(request, show_id):
     return redirect('/shows')
 
 def create_show(request):
-    Shows.objects.create(title = request.POST['title'], network = request.POST['network'], 
-                        release_date = request.POST['date'], desc = request.POST['description'])
+    errors = Shows.objects.show_validator(request.POST)
+    if Shows.objects.filter(title=request.POST['title']).exists():
+        errors['exists'] = "This show already exists!"
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/shows/new')
+    else:
+        Shows.objects.create(title = request.POST['title'], network = request.POST['network'], 
+                        release_date = request.POST['date'], desc = request.POST['desc'])
     return redirect('/shows')
